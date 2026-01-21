@@ -1,0 +1,512 @@
+lin_reg_multiple <- lm(Ozone ~ Temp + Solar.R + Wind, data = dataset)  # Modelo múltiple
+summary(lin_reg_multiple)
+# 4. Regresión Polinomial (hasta grado 4 para Temp)
+dataset$Temp2 <- dataset$Temp^2
+dataset$Temp3 <- dataset$Temp^3
+dataset$Temp4 <- dataset$Temp^4
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = dataset)  # Modelo polinomial
+summary(poly_reg)
+# 5. Gráficos de regresión
+install.packages("ggplot2")  # Instalar si no está
+library(ggplot2)
+# Gráfico 1: Regresión Lineal Simple
+ggplot() +
+geom_point(aes(x = dataset$Temp, y = dataset$Ozone), colour = "red") +  # Puntos reales
+geom_line(aes(x = dataset$Temp, y = predict(lin_reg_simple, dataset)), colour = "blue") +  # Línea ajustada
+ggtitle("Ozone vs Temp (Lineal Simple)") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico 1: Regresión Lineal Simple
+ggplot() +
+geom_point(aes(x = dataset$Temp, y = dataset$Ozone), colour = "red") +  # Puntos reales
+geom_line(aes(x = dataset$Temp, y = predict(lin_reg_simple, dataset)), colour = "blue") +  # Línea ajustada
+ggtitle("Ozone vs Temp (Lineal Simple)") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico 2: Regresión Polinomial sin secuencia (menos precisa visualmente)
+ggplot() +
+geom_point(aes(x = dataset$Temp, y = dataset$Ozone), colour = "red") +
+geom_line(aes(x = dataset$Temp, y = predict(poly_reg, dataset)), colour = "blue") +
+ggtitle("Ozone vs Temp (Polinomial)") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico 3: Polinomial con x_grid (más preciso visualmente)
+x_grid <- seq(min(dataset$Temp), max(dataset$Temp), 0.1)  # Rango detallado
+ggplot() +
+geom_point(aes(x = dataset$Temp, y = dataset$Ozone), colour = "red") +
+geom_line(aes(x = x_grid, y = predict(poly_reg, newdata = data.frame(
+Temp = x_grid,
+Temp2 = x_grid^2,
+Temp3 = x_grid^3,
+Temp4 = x_grid^4
+))), colour = "blue") +
+ggtitle("Ozone vs Temp (Polinomial Detallado)") +
+xlab("Temperatura") +
+ylab("Ozono")
+# 6. Evaluar eficiencia (comparar R^2)
+summary(lin_reg_simple)$r.squared     # R2 Simple
+summary(lin_reg_multiple)$r.squared   # R2 Múltiple
+summary(poly_reg)$r.squared           # R2 Polinomial
+# Cargar dataset y paquetes necesarios
+data(airquality)
+install.packages("ggplot2")  # Ejecutar solo una vez
+library(ggplot2)
+# 1. Explorar el dataset
+head(airquality)  # Ver primeras filas
+# 2. Eliminar filas con NA
+dataset <- na.omit(airquality)
+# 3. Ver importancia completa con regresión múltiple
+modelo_completo <- lm(Ozone ~ Solar.R + Wind + Temp + Month + Day, data = dataset)
+summary(modelo_completo)
+aircomplete <- airquality[complete.cases(airquality), ]
+summary(aircomplete)
+aircomplete <- airquality[complete.cases(airquality), ]
+print(aircomplete)
+longitud_airquality <- length(airquality)
+cat("Longitud del dataset airquality:", longitud_airquality, "\n")
+cat("Longitud del dataset airquality:", length(aircomplete), "\n")
+cat("Longitud del dataset airquality:", length(aircomplete), "\n")
+cat("Longitud del dataset airquality:", dim(airquality), "\n")
+data(airquality)
+summary(aircomplete[, c("Ozone", "Solar.R", "Wind", "Temp", "Month", "Day")])
+modelo1 <- lm(Ozone ~ Solar.R + Wind + Temp + Month + Day, data = aircomplete)
+summary(modelo1)
+summary(airquality$Ozone)
+modelo1 <- lm(Ozone, data = aircomplete)
+modelo1 <- lm(Ozone~ , data = aircomplete)
+summary(airquality$Ozone)
+modelo1 <- lm(Ozone ~ . , data = aircomplete)
+summary(modelo1)
+aircomplete <- airquality[complete.cases(airquality), ]
+print(aircomplete)
+modelo2 <- lm(Solar.R ~ . , data = aircomplete)
+summary(modelo2)
+modelo1 <- lm(Ozone ~ . , data = aircomplete)
+summary(modelo1)
+modelo2 <- lm(Solar.R ~ . , data = aircomplete)
+summary(modelo2)
+modelo3 <- lm(Wind ~ . , data = aircomplete)
+summary(modelo3)
+modelo4 <- lm(Temp ~ . , data = aircomplete)
+summary(modelo4)
+modelo5 <- lm(Month ~ . , data = aircomplete)
+summary(modelo5)
+modelo6 <- lm(Day ~ . , data = aircomplete)
+summary(modelo6)
+data(airquality)
+install.packages("ggplot2")
+library(ggplot2)
+#2. Generar los graficos de Regresion Linela simple, multiple y polinomial en el datadet airquality
+# Crear variables polinomiales para Temp
+aircomplete$Temp2 <- aircomplete$Temp^2
+aircomplete$Temp3 <- aircomplete$Temp^3
+aircomplete$Temp4 <- aircomplete$Temp^4
+# Regresión lineal simple: Ozone ~ Temp
+lin_reg <- lm(Ozone ~ Temp, data = aircomplete)
+# Regresión múltiple: Ozone ~ Solar.R + Wind + Temp + Month + Day
+multi_reg <- lm(Ozone ~ Solar.R + Wind + Temp + Month + Day, data = aircomplete)
+# Regresión polinomial: Ozone ~ Temp + Temp2 + Temp3 + Temp4
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = aircomplete)
+# Mostrar resumen del modelo lineal simple
+summary(lin_reg)
+# Gráfico 1: regresión lineal simple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = aircomplete$Temp, y = predict(lin_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone vs Temp - Regresión Lineal Simple") +
+xlab("Temperatura") +
+ylab("Ozone")
+# Gráfico 2: regresión múltiple (solo puntos vs predicción simple usando Temp)
+# Aquí para visualizar la múltiple no podemos graficar la línea directa, pero podemos graficar valores predichos vs Temp
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_point(aes(x = aircomplete$Temp, y = predict(multi_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone real (rojo) vs predicción múltiple (azul)") +
+xlab("Temperatura") +
+ylab("Ozone")
+# Gráfico 3: regresión polinomial más suave
+temp_grid <- seq(min(aircomplete$Temp), max(aircomplete$Temp), 0.1)
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = temp_grid,
+y = predict(poly_reg, newdata = data.frame(
+Temp = temp_grid,
+Temp2 = temp_grid^2,
+Temp3 = temp_grid^3,
+Temp4 = temp_grid^4
+))), colour = "blue") +
+ggtitle("Ozone vs Temp - Regresión Polinomial") +
+xlab("Temperatura") +
+ylab("Ozone")
+modelo_ozone <- lm(Ozone ~ ., data = aircomplete)
+summary(modelo_ozone)#1
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_tem)#2
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_temp)#2
+summary(lin_reg)
+predict(lin_reg, data.frame(Salary=6.5,Level=6.5))
+summary(lin_reg)
+predict(lin_reg, data.frame(Ozone=6.5,Temp=6.5))
+mmary(multi_reg)
+summary(multi_reg)
+predict(multi_reg, data.frame( Solar.R=6.5, Wind=6.5, Temp=6.5, Month=6.5, Day=6.5))
+summary(poly_reg)
+predict(poly_reg, data.frame( Ozone=6.5, Temp=6.5, Temp2=6.5, Temp3=6.5, Temp4=6.5)
+summary(multi_reg)
+summary(multi_reg)
+predict(multi_reg, data.frame( Solar.R=6.5, Wind=6.5, Temp=6.5, Month=6.5, Day=6.5))
+summary(poly_reg)
+predict(poly_reg, data.frame( Ozone=6.5, Temp=6.5, Temp2=6.5, Temp3=6.5, Temp4=6.5))
+summary(lin_reg)
+predict(lin_reg, data.frame(Ozone=90,Temp=90))
+ummary(multi_reg)
+summary(multi_reg)
+predict(multi_reg, data.frame( Solar.R=90, Wind=90, Temp=90, Month=2, Day=1))
+summary(lin_reg)
+predict(lin_reg, data.frame(Ozone=90,Temp=90))
+summary(multi_reg)
+predict(multi_reg, data.frame( Solar.R=90, Wind=90, Temp=90, Month=2, Day=1))
+summary(poly_reg)
+predict(poly_reg, data.frame( Ozone=90, Temp=90, Temp2=90, Temp3=90, Temp4=90))
+# Gráfico 1: regresión lineal simple
+ggplot() +
+geom_point(aes(x = aircomplete$Ozone, y = aircomplete$Temp), colour = "red") +
+geom_line(aes(x = aircomplete$Ozone, y = predict(lin_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone vs Temp - Regresión Lineal Simple") +
+xlab("Temperatura") +
+ylab("Ozone")
+modelo_ozone <- lm(Ozone ~ ., data = aircomplete)
+summary(modelo_ozone)#1
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_temp)#2
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_temp)#2
+modelo_wind <- lm(Wind ~ ., data = aircomplete)
+summary(modelo_wind)#3
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_temp)#2
+modelo_wind <- lm(Wind ~ ., data = aircomplete)
+summary(modelo_wind)#3
+modelo_month <- lm(Month ~ ., data = aircomplete)
+summary(modelo_month)#4
+modelo_month <- lm(Month ~ ., data = aircomplete)
+summary(modelo_month)#4
+modelo_solar <- lm(Solar.R ~ ., data = aircomplete)
+summary(modelo_solar)#5
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_temp)#2
+data(airquality)
+install.packages("ggplot2")
+library(ggplot2)
+#1.Explorar el dataset
+head(airquality)
+aircomplete <- airquality[complete.cases(airquality), ]
+print(aircomplete)
+#Orden de datos por prioridad
+modelo_ozone <- lm(Ozone ~ ., data = aircomplete)
+summary(modelo_ozone)#1
+modelo_temp <- lm(Temp ~ ., data = aircomplete)
+summary(modelo_temp)#2
+modelo_wind <- lm(Wind ~ ., data = aircomplete)
+summary(modelo_wind)#3
+modelo_month <- lm(Month ~ ., data = aircomplete)
+summary(modelo_month)#4
+modelo_solar <- lm(Solar.R ~ ., data = aircomplete)
+summary(modelo_solar)#5
+modelo_solar <- lm(Solar.R ~ ., data = aircomplete)
+summary(modelo_solar)#5
+modelo_day <- lm(Day ~ ., data = aircomplete)
+summary(modelo_day)#6
+#2. Generar los graficos de Regresion Lineal simple, multiple y polinomial
+# Crear variables polinomiales para Temp
+aircomplete$Temp2 <- aircomplete$Temp^2
+aircomplete$Temp3 <- aircomplete$Temp^3
+aircomplete$Temp4 <- aircomplete$Temp^4
+# Regresión lineal simple: Ozone ~ Temp
+lin_reg <- lm(Ozone ~ Temp, data = aircomplete)
+# Regresión múltiple: Ozone ~ Solar.R + Wind + Temp + Month + Day
+multi_reg <- lm(Ozone ~ Solar.R + Wind + Temp + Month + Day, data = aircomplete)
+# Regresión polinomial: Ozone ~ Temp + Temp2 + Temp3 + Temp4
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = aircomplete)
+# Regresión lineal simple: Ozone ~ Temp
+lin_reg <- lm(Ozone ~ Temp, data = aircomplete)
+# Regresión múltiple: Ozone ~ Solar.R + Wind + Temp + Month + Day
+multi_reg <- lm(Ozone ~ Solar.R + Wind + Temp + Month + Day, data = aircomplete)
+# Regresión polinomial: Ozone ~ Temp + Temp2 + Temp3 + Temp4
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = aircomplete)
+#La temperatura va en el eje de las X(variable independiente) Porque
+#La temperatura tiene un impacto significativo en la formación y distribución del ozono atmosférico
+#por eso Ozono en en el eje de las Y(variable dependiente)
+# Gráfico 1: regresión lineal simple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = aircomplete$Temp, y = predict(lin_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone vs Temp - Regresión Lineal Simple") +
+xlab("Temperatura") +
+ylab("Ozone")
+# Gráfico 2: regresión múltiple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_point(aes(x = aircomplete$Temp, y = predict(multi_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone real (rojo) vs predicción múltiple (azul)") +
+xlab("Temperatura") +
+ylab("Ozone")
+# Gráfico 3: regresión polinomial
+temp_grid <- seq(min(aircomplete$Temp), max(aircomplete$Temp), 0.1)
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = temp_grid,
+y = predict(poly_reg, newdata = data.frame(
+Temp = temp_grid,
+Temp2 = temp_grid^2,
+Temp3 = temp_grid^3,
+Temp4 = temp_grid^4
+))), colour = "blue") +
+ggtitle("Ozone vs Temp - Regresión Polinomial") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico 2: regresión múltiple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_point(aes(x = aircomplete$Temp, y = predict(multi_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone real (rojo) vs predicción múltiple (azul)") +
+xlab("Temperatura") +
+ylab("Ozono")
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90)
+summary(poly_reg)
+summary(poly_reg)
+predict(poly_reg, data.frame( Ozone=90, Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90))
+# Regresión lineal simple:
+lin_reg <- lm(Ozone ~ Temp, data = aircomplete)
+# Regresión múltiple:
+multi_reg <- lm(Ozone ~ Temp + Wind + Solar.R, data = aircomplete)
+# Regresión polinomial: Ozone ~ Temp + Temp2 + Temp3 + Temp4
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = aircomplete)
+#3. Determinar cual el el modelo de regresion mas efectivo
+summary(lin_reg)
+predict(lin_reg, data.frame(Ozone=90,Temp=90))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+#3. Determinar cual el el modelo de regresion mas efectivo
+summary(lin_reg)
+predict(lin_reg, data.frame(Ozone=90,Temp=90))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+# Gráfico 2: regresión múltiple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = aircomplete$Temp, y = predict(multi_reg, aircomplete)), colour = "blue") +
+ggtitle("Ozone real (rojo) vs predicción múltiple (azul)") +
+xlab("Temperatura") +
+ylab("Ozono")
+summary(lin_reg)
+predict(lin_reg, data.frame(Temp=90))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90))
+# Regresión lineal simple:
+lin_reg <- lm(Ozone ~ Temp, data = aircomplete)
+# Regresión múltiple:
+multi_reg <- lm(Ozone ~ Temp + Wind + Solar.R, data = aircomplete)
+# Regresión polinomial: Ozone ~ Temp + Temp2 + Temp3 + Temp4
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = aircomplete)
+#3. Determinar cual el el modelo de regresion mas efectivo
+summary(lin_reg)
+predict(lin_reg, data.frame(Temp=90))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=90, Solar.R=90))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=9.0, Solar.R=90))
+summary(lin_reg)
+predict(lin_reg, data.frame(Temp=90))
+summary(multi_reg)
+predict(multi_reg, data.frame(Temp=90, Wind=9.0, Solar.R=90))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp=90, Temp2=90^2, Temp3=90^3, Temp4=90^4))
+install.packages("ggplot2"))
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("ggplot2")
+library(ggplot2)
+# 1. Explorar y limpiar el dataset airquality
+# airquality ya está disponible en R
+# Eliminar filas con NAs en las columnas que vamos a usar
+datos_limpios <- na.omit(airquality[, c("Ozone", "Temp", "Wind", "Solar.R")])
+# 2. Implementar modelos de regresión
+# 2.1 Regresión Lineal Simple: Ozone vs Temp
+modelo_rls <- lm(Ozone ~ Temp, data = datos_limpios)
+# summary(modelo_rls) # Descomenta para ver detalles del modelo
+# Gráfico RLS simple
+ggplot(datos_limpios, aes(x = Temp, y = Ozone)) +
+geom_point() +
+geom_smooth(method = "lm", col = "red") +
+labs(title = "RLS: Ozone vs Temp")
+# 1. Explorar y limpiar el dataset airquality
+# airquality ya está disponible en R
+# Eliminar filas con NAs en las columnas que vamos a usar
+datos_limpios <- na.omit(airquality[, c("Ozone", "Temp", "Wind", "Solar.R")])
+# 2. Implementar modelos de regresión
+# 2.1 Regresión Lineal Simple: Ozone vs Temp
+modelo_rls <- lm(Ozone ~ Temp, data = datos_limpios)
+# summary(modelo_rls) # Descomenta para ver detalles del modelo
+# Gráfico RLS simple
+ggplot(datos_limpios, aes(x = Temp, y = Ozone)) +
+geom_point() +
+geom_smooth(method = "lm", col = "red") +
+labs(title = "RLS: Ozone vs Temp")
+library(ggplot2)
+library(ggplot2)
+# 1. Explorar y limpiar el dataset airquality
+# airquality ya está disponible en R
+# Eliminar filas con NAs en las columnas que vamos a usar
+datos_limpios <- na.omit(airquality[, c("Ozone", "Temp", "Wind", "Solar.R")])
+# 2. Implementar modelos de regresión
+# 2.1 Regresión Lineal Simple: Ozone vs Temp
+modelo_rls <- lm(Ozone ~ Temp, data = datos_limpios)
+# summary(modelo_rls) # Descomenta para ver detalles del modelo
+# Gráfico RLS simple
+ggplot(datos_limpios, aes(x = Temp, y = Ozone)) +
+geom_point() +
+geom_smooth(method = "lm", col = "red") +
+labs(title = "RLS: Ozone vs Temp")
+# 2.2 Regresión Lineal Múltiple: Ozone vs Temp, Wind, Solar.R
+modelo_rlm <- lm(Ozone ~ Temp + Wind + Solar.R, data = datos_limpios)
+# summary(modelo_rlm) # Descomenta para ver detalles del modelo
+# Gráfico RLM simple (Observado vs Predicho)
+ggplot(datos_limpios, aes(x = Ozone, y = predict(modelo_rlm))) +
+geom_point() +
+geom_abline(intercept = 0, slope = 1, col = "red", linetype = "dashed") +
+labs(title = "RLM: Ozone Observado vs Predicho")
+# 2.3 Regresión Polinomial: Ozone vs Temp (grado 2)
+modelo_poli <- lm(Ozone ~ poly(Temp, degree = 2), data = datos_limpios)
+# summary(modelo_poli) # Descomenta para ver detalles del modelo
+# Gráfico Polinomial simple
+ggplot(datos_limpios, aes(x = Temp, y = Ozone)) +
+geom_point() +
+geom_smooth(method = "lm", formula = y ~ poly(x, 2), col = "blue") +
+labs(title = "Polinomial: Ozone vs Temp (grado 2)")
+# 3. Comparar modelos
+# Usamos R-cuadrado Ajustado (Adj. R-squared), Error Estándar Residual (RSE) y AIC
+comp_rls <- summary(modelo_rls)
+comp_rlm <- summary(modelo_rlm)
+comp_poli <- summary(modelo_poli)
+data(airquality)
+install.packages("ggplot2")  # Ejecutar solo una vez
+library(ggplot2)
+#1.Explorar el dataset
+head(airquality)
+aircomplete <- airquality[complete.cases(airquality), ]
+print(aircomplete)
+cat("Dimensiones del dataset Airquality(Rasurado):", dim(aircomplete), "\n")
+summary(airquality)
+summary(airquality)
+summary(aircomplete)
+# Modelo lineal simple: Ozone vs Temp
+lin_reg <- lm(Ozone ~ Temp, data = aircomplete)
+# Crear variables polinómicas
+aircomplete$Temp2 <- aircomplete$Temp^2
+aircomplete$Temp3 <- aircomplete$Temp^3
+aircomplete$Temp4 <- aircomplete$Temp^4
+# Modelo polinomial
+poly_reg <- lm(Ozone ~ Temp + Temp2 + Temp3 + Temp4, data = aircomplete)
+ggplot(aircomplete, aes(x = Temp, y = Ozone)) +
+geom_point(color = "red") +
+geom_smooth(method = "lm", se = FALSE, color = "blue") +
+ggtitle("Regresión Lineal Simple: Ozone vs Temp") +
+xlab("Temperatura") +
+ylab("Ozono")
+library(ggplot2)
+ggplot(aircomplete, aes(x = Temp, y = Ozone)) +
+geom_point(color = "red") +
+geom_smooth(method = "lm", se = FALSE, color = "blue") +
+ggtitle("Regresión Lineal Simple: Ozone vs Temp") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico Regresion Lineal simple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = aircomplete$Temp,
+y = predict(lin_reg, newdata = aircomplete)), colour = "blue") +
+ggtitle("Ozone vs Temp (Conjunto de entrenamiento)") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico Regresion Lineal simple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = aircomplete$Temp,
+y = predict(lin_reg, newdata = aircomplete)), colour = "blue") +
+ggtitle("Ozone vs Temp (Conjunto de entrenamiento)") +
+xlab("Temperatura") +
+ylab("Ozono")
+# Gráfico Regresion Lineal múltiple
+ggplot() +
+geom_point(aes(x = aircomplete$Ozone, y = aircomplete$Pred_Mult), colour = "orange") +
+geom_abline(slope = 1, intercept = 0, colour = "blue", linetype = "dashed") +
+ggtitle("Ozone real vs predicho (Regresión Múltiple)") +
+xlab("Ozone real") +
+ylab("Ozone predicho")
+library(ggplot2)
+# Gráfico Regresion Lineal múltiple
+ggplot() +
+geom_point(aes(x = aircomplete$Ozone, y = aircomplete$Pred_Mult), colour = "orange") +
+geom_abline(slope = 1, intercept = 0, colour = "blue", linetype = "dashed") +
+ggtitle("Ozone real vs predicho (Regresión Múltiple)") +
+xlab("Ozone real") +
+ylab("Ozone predicho")
+# Gráfico Regresion Lineal Multiple
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = aircomplete$Temp,
+y = predict(multi_reg, newdata = aircomplete)), colour = "blue") +
+ggtitle("Ozone vs Temp (Conjunto de entrenamiento)") +
+xlab("Temperatura") +
+ylab("Ozono")
+x_grid <- seq(min(aircomplete$Temp), max(aircomplete$Temp), 0.1)
+# Gráfico estilo personalizado
+ggplot() +
+geom_point(aes(x = aircomplete$Temp, y = aircomplete$Ozone), colour = "red") +
+geom_line(aes(x = x_grid,
+y = predict(poly_reg, newdata= data.frame(Temp=x_grid,
+Temp2=x_grid^2,
+Temp3=x_grid^3,
+Temp4=x_grid^4
+))),
+color="blue")+
+ggtitle("Regresión Polinomial: Ozone vs Temp") +
+xlab("Temperatura") +
+ylab("Ozono")
+valores_temp <- c(60, 65, 70, 75, 80, 85)
+resultado <- data.frame(
+Temp = valores_temp,
+Ozone_Predicho = round(predict(poly_reg, newdata = nuevos_valores), 2)
+)
+predict(lin_reg, data.frame(Temp = 75))
+summary(lin_reg)
+predict(lin_reg, data.frame(Temp = 75))
+summary(lin_reg)
+predict(lin_reg, data.frame(Temp = 75))
+summary(multi_reg)
+predict(multi_reg, data.frame(Solar.R = 35, Wind = 35, Temp = 75))
+aircomplete <- airquality[complete.cases(airquality), ]
+print(aircomplete)
+summary(multi_reg)
+predict(multi_reg, data.frame(Solar.R = 190, Wind = 7.0, Temp = 75))
+summary(lin_reg)
+predict(lin_reg, data.frame(Temp = 75))
+summary(poly_reg)
+predict(poly_reg, data.frame(Temp = 75,Temp2 = 75^2,Temp3 = 75^3,Temp4 = 75^4))
