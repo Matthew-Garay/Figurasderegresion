@@ -1,85 +1,64 @@
-﻿# Figuras de Regresion
+# Figuras de Regresion
 
-<p align="center">
-  <a href="https://github.com/Matthew-Garay/Figurasderegresion/actions/workflows/ci.yml"><img src="https://github.com/Matthew-Garay/Figurasderegresion/actions/workflows/ci.yml/badge.svg" alt="CI Status"/></a>
-  <a href="https://github.com/Matthew-Garay/Figurasderegresion/security/dependabot"><img src="https://img.shields.io/badge/Dependabot-enabled-blue?style=flat-square&logo=github&labelColor=555555" alt="Dependabot"/></a>
-</p>
+## A. Titulo del Proyecto y Resumen Ejecutivo
 
-Tres modelos de regresion (lineal simple, lineal multiple y polinomial) sobre el dataset integrado airquality de R, cada uno con su grafica realizada en ggplot2. La variable a predecir es el ozono.
+Figuras de Regresion es un script de analisis estadistico en R que implementa tres modelos de regresion (lineal simple, lineal multiple y polinomial) sobre el dataset integrado airquality, con visualizaciones generadas mediante ggplot2. El problema que resuelve es la exploracion de relaciones entre variables meteorológicas y la prediccion del nivel de ozono como variable objetivo. Su alcance tecnologico se limita al analisis estadistico y visualizacion local en R, sin componente de servidor ni persistencia de datos.
 
-## Stack tecnologico
+## B. Arquitectura del Sistema
 
-- **Lenguaje:** R 4.x
-- **Visualizacion:** ggplot2
-- **Analisis:** Regresion lineal simple, multiple y polinomial
+El programa sigue una arquitectura secuencial de procesamiento estadistico. El flujo de datos comienza con la carga del dataset airquality integrado en R, seguido de la construccion de tres modelos de regresion independientes sobre los mismos datos: regresion lineal simple, regresion lineal multiple y regresion polinomial. Cada modelo genera su propia visualización con ggplot2. No existen capas logicas separadas ni comunicacion entre componentes; todo el procesamiento ocurre dentro de un unico script de R.
 
-## Arquitectura
+## C. Caracteristicas Tecnicas Clave
 
-```mermaid
-graph TD
-    A[Dataset airquality] --> B[Regresion lineal simple]
-    A --> C[Regresion lineal multiple]
-    A --> D[Regresion polinomial]
-    B --> E[Grafica ggplot2]
-    C --> F[Grafica ggplot2]
-    D --> G[Grafica ggplot2]
-    
-    style A fill:#e1f5fe,stroke:#01579b
-    style B fill:#fff3e0,stroke:#e65100
-    style C fill:#e8f5e9,stroke:#1b5e20
-    style D fill:#f3e5f5,stroke:#4a148c
-    style E fill:#ffe0b2,stroke:#ef6c00
-    style F fill:#ffe0b2,stroke:#ef6c00
-    style G fill:#ffe0b2,stroke:#ef6c00
+- Regresion lineal simple sobre el dataset airquality de R.
+- Regresion lineal multiple sobre el dataset airquality de R.
+- Regresion polinomial sobre el dataset airquality de R.
+- Visualizaciones de los modelos con ggplot2.
+- Variable objetivo: nivel de ozono.
+- No utiliza base de datos, ni concurrencia, ni procesamiento en tiempo real, ni protocolos de red.
+- Seguridad limitada al ambito de ejecucion local; no maneja datos sensibles ni autenticacion.
+
+## D. Especificacion del Stack Tecnologico
+
+| Categoria | Tecnologia / Librería |
+|-----------|----------------------|
+| Lenguaje | R 4.x |
+| Visualizacion | ggplot2 |
+| Analisis | Regresion lineal simple, regresion lineal multiple, regresion polinomial |
+
+## E. Guia de Instalacion, Configuracion y Despliegue
+
+### Requisitos previos del sistema
+
+- R 4.x instalado en el sistema operativo.
+- Paquete ggplot2 instalado en R.
+
+### Secuencia de comandos para clonacion e instalacion
+
+```bash
+git clone https://github.com/Matthew-Garay/Figurasderegresion.git
+cd Figurasderegresion
 ```
 
-## Caracteristicas
+### Configuracion de variables de entorno
 
-- Regresion lineal simple sobre airquality
-- Regresion lineal multiple sobre airquality
-- Regresion polinomial sobre airquality
-- Visualizaciones con ggplot2
-- Variable objetivo: ozono
+Este proyecto no requiere archivo .env ni variables de entorno.
 
-## Como ejecutar
+### Comandos para ejecucion en entorno de Desarrollo
 
-### Requisitos previos
-
-- R 4.x instalado
-- Paquete ggplot2
-
-### Ejecucion
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/Matthew-Garay/Figurasderegresion.git
-   cd Figurasderegresion
-   ```
-2. Instala ggplot2 si no lo tienes:
-   ```r
-   install.packages("ggplot2")
-   ```
-3. Ejecuta el script:
-   ```bash
-   Rscript P12.R
-   ```
-
-## Estructura del proyecto
-
-```
-Figurasderegresion/
-├── P12.R                    # Codigo fuente en R
-├── .gitignore               # Archivos excluidos del control de versiones
-├── LICENSE                  # Licencia MIT
-├── README.md                # Este archivo
-└── docs/                    # Documentacion extendida
-    ├── setup-guide.md       # Guia de instalacion
-    └── architecture.md      # Diagrama de arquitectura
+```r
+install.packages("ggplot2")
 ```
 
-## Contacto
+```bash
+Rscript P12.R
+```
 
-<p align="center">
-  <a href="mailto:1911.garay.perez@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
-  <a href="https://www.linkedin.com/in/matthewgarayperez/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-</p>
+### Comandos para ejecucion en entorno de Produccion
+
+No aplica entorno de produccion separado; el script se ejecuta localmente con el mismo comando de desarrollo.
+
+## F. Creditos de Autoría
+
+Desarrollado por: Matthew Ilveneff Garay Pérez
+Correo Electronico: 1911.garay.perez@gmail.com
